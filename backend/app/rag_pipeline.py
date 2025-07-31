@@ -12,7 +12,7 @@ load_dotenv()
 current_dir = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(current_dir, "../db")
 persistent_directory = os.path.join(db_path, "chroma_db_rag")
-json_path = os.path.join("../rappler_fax_checks.json")
+json_path = os.path.join(current_dir, "..", "rappler_fax_checks.json")
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 llm = ChatOpenAI(model="gpt-4o")
 
@@ -44,7 +44,7 @@ def verify_source(text: str) -> dict:
     relevant_docs = retriever.invoke(text)
 
     context = "\n\n".join(doc.page_content for doc in relevant_docs)
-    sources = [doc.metada.get("source", "unknown") for doc in relevant_docs]
+    sources = [doc.metadata.get("source", "unknown") for doc in relevant_docs]
 
     messages = [
         SystemMessage(content="You are a fact-checking assistant. Only answer based on the context provided. Identify if the claim is true or false, or unknown."),

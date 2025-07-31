@@ -28,7 +28,9 @@ def hello():
 
 @app.post("/verify")
 def verify_text(req: ClaimRequest):
-    verify_source(req.query)
+    data = verify_source(req.query)
+    return data
+
 
 @app.post("/verify-file")
 def verify_file(file: UploadFile = File(...)):
