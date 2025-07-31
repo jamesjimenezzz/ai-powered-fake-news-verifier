@@ -26,8 +26,8 @@ const VerifcationSide = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-5">
-          <div className="flex w-full items-center bg-[#F5F5F5]  font-semibold py-1.5 rounded-lg justify-evenly">
-            <div className="w-full text-center bg-white mx-2 py-1 rounded-md ">
+          <div className="flex w-full items-center bg-[#F5F5F5] dark:bg-black font-semibold py-1.5 rounded-lg justify-evenly">
+            <div className="w-full text-center bg-white dark:bg-stone-900 mx-2 py-1 rounded-md ">
               <h1>Text</h1>
             </div>
             <div className="w-full mx-2 py-1 rounded-md text-center">
