@@ -17,23 +17,32 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { VerificationResultFile } from "@/lib/api";
 import { useResultStore } from "@/store/verification";
 
 const VerificationFiles = () => {
   const [query, setQuery] = useState<string>("");
   const [pdfName, setPdfName] = useState("");
-  const [fileName, setFileName] = useState<string>("");
+  const [fileSubmit, setFileSubmit] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState("");
 
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const pdfInputRef = useRef<HTMLInputElement | null>(null);
-  const { setVerdict, setSources } = useResultStore();
+  const {
+    setVerdict,
+    setSources,
+    fileName,
+    setFileName,
+    isLoading,
+    setIsLoading,
+  } = useResultStore();
 
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setFileName(file.name);
       setImagePreview(URL.createObjectURL(file));
+      setFileSubmit(file);
     }
   };
 
@@ -41,13 +50,29 @@ const VerificationFiles = () => {
     setFileName("");
     setImagePreview("");
     setPdfName("");
+    setFileSubmit(null);
   };
 
   const handlePdf = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
     if (file) {
+      setFileName(file.name);
       setPdfName(file.name);
+      setFileSubmit(file);
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true);
+      const response = await VerificationResultFile(fileSubmit!);
+      setVerdict(response.verdict);
+      setSources(response.sources);
+    } catch {
+      console.log("Failed to submit");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -122,13 +147,14 @@ const VerificationFiles = () => {
             <Button
               variant={"destructive"}
               onClick={handleRemove}
-              disabled={fileName.length == 0 && pdfName.length == 0}
+              disabled={fileName.length == 0}
               className=" py-5 cursor-pointer flex-1  my-4"
             >
               Remove
             </Button>
             <Button
-              disabled={fileName.length == 0 && pdfName.length == 0}
+              onClick={handleSubmit}
+              disabled={fileName.length == 0}
               className=" py-5 cursor-pointer flex-1/2  my-4"
             >
               Analyze Text

@@ -36,3 +36,25 @@ export async function VerificationResult(
     return null;
   }
 }
+
+export async function VerificationResultFile(file: File) {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const res = await fetch(`${BASE_URL}/verify-file`, {
+      method: "POST",
+      body: formData,
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      return error.detail;
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
