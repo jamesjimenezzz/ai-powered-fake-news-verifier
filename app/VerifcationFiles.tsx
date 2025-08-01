@@ -55,7 +55,7 @@ const VerificationFiles = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-3">
             <MessageSquare className="mt-1" />
-            <h1 className="text-xl font-semibold">Text Analysis</h1>
+            <h1 className="text-xl font-semibold">Claim Analysis</h1>
           </CardTitle>
         </CardHeader>
         <CardContent>

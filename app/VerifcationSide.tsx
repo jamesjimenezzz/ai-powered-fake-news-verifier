@@ -9,8 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { MessageSquare } from "lucide-react";
 import { Shield } from "lucide-react";
 import VerificationText from "./VerificationText";
 import VerificationFiles from "./VerifcationFiles";
@@ -48,7 +46,9 @@ const VerifcationSide = () => {
             <div
               onClick={() => setPage((page) => (page = 0))}
               className={`w-full text-center cursor-pointer mx-2 py-1 rounded-md ${
-                page === 0 ? "bg-white dark:bg-stone-900" : ""
+                page === 0
+                  ? "bg-white outline-gray-300 outline dark:bg-stone-900"
+                  : ""
               } `}
             >
               <h1>Text</h1>
@@ -56,12 +56,18 @@ const VerifcationSide = () => {
             <div
               onClick={() => setPage((page) => (page = 1))}
               className={`w-full text-center cursor-pointer mx-2 py-1 rounded-md ${
-                page === 1 ? "bg-white dark:bg-stone-900" : ""
+                page === 1
+                  ? "bg-white outline-gray-300 outline dark:bg-stone-900"
+                  : ""
               } `}
             >
               <h1>Files</h1>
             </div>
           </div>
+          <p className="text-center text-gray-400 font-[400] ">
+            We never collect personal data, your uploads are private. Try it
+            below.
+          </p>
           {pageNum}
         </CardContent>
       </Card>
