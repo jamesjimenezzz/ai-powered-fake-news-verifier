@@ -11,7 +11,7 @@ load_dotenv()
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(current_dir, "../db")
-persistent_directory = os.path.join(db_path, "chroma_db_rag")
+persistent_directory = os.path.join(db_path, "chroma_db_rag-with-deped")
 json_path = os.path.join(current_dir, "..", "rappler_fax_checks.json")
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 llm = ChatOpenAI(model="gpt-4o")

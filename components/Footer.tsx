@@ -1,12 +1,12 @@
 import { HelloWorld } from "@/lib/api";
 import React from "react";
 
-const Footer =  async () => {
-const hello = await HelloWorld()
+const Footer = async () => {
+  const hello = await HelloWorld();
 
   return (
     <div className="flex flex-col gap-2 max-w-[1400px] mx-auto">
-      <h1>How it Works {hello.message}</h1>
+      <h1>How it Works {hello ? hello.message : ""}</h1>
       <div className="flex flex-col gap-2">
         <li>
           <span className="text-muted-foreground">
