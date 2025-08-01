@@ -2,7 +2,6 @@ import fitz
 from PIL import Image
 import pytesseract
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 
 def extract_from_pdf(file_path: str) -> str:

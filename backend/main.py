@@ -33,13 +33,13 @@ def verify_text(req: ClaimRequest):
 
 
 @app.post("/verify-file")
-def verify_file(file: UploadFile = File(...)):
+async def verify_file(file: UploadFile = File(...)):
     filename = file.filename.lower()
     os.makedirs("temp_uploads", exist_ok=True)
     temp_path = os.path.join("temp_uploads", filename)
 
     with open(temp_path, "wb") as f:
-        f.write(file.read())
+        f.write(await file.read())
     
     try:
         if filename.endswith(".pdf"):
