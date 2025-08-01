@@ -12,9 +12,27 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ClaimData } from "@/lib/api";
+import { ResultData } from "@/lib/types";
 
 const VerificationText = () => {
   const [query, setQuery] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false)
+  const [verdict, setVerdict] = useState("")
+  const [sources, setSources] = useState<string[]>([])
+  
+  const handleSubmit = async () => {
+    setLoading(true)
+   try {
+    const postData = await ClaimData(query)
+    setVerdict(postData.verdict)
+    setSources(postData.sources)
+   } catch {
+      console.log("failed")
+   } finally {
+    setLoading(false)
+   }
+  }
 
   return (
     <>
@@ -33,6 +51,7 @@ const VerificationText = () => {
             placeholder="Paste or type the news article, claim, or text you want to verify..."
           ></textarea>
           <Button
+          onClick={handleSubmit}
             disabled={query.length < 1}
             className="w-full py-5 cursor-pointer  my-4"
           >
@@ -40,6 +59,14 @@ const VerificationText = () => {
           </Button>
         </CardContent>
       </Card>
+
+      {!loading ? (
+        <p>
+           RESULT: {verdict}
+        </p>
+      ): (
+        <p>Loading...</p>
+      )}
     </>
   );
 };
