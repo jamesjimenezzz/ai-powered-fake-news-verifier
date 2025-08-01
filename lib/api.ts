@@ -1,4 +1,5 @@
 const BASE_URL = "http://127.0.0.1:8000";
+import { VerificationResponse } from "./types";
 
 export async function HelloWorld() {
   try {
@@ -14,23 +15,22 @@ export async function HelloWorld() {
   }
 }
 
-export async function ClaimData(data: string) {
+export async function VerificationResult(
+  claim: string
+): Promise<VerificationResponse | null> {
   try {
-    const res = await fetch("http://127.0.0.1:8000/verify", {
+    const res = await fetch(`${BASE_URL}/verify`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ query: data }),
+      body: JSON.stringify({ query: claim }),
     });
-
     if (!res.ok) {
-      const error = await res.json();
-      return error.detail;
+      throw new Error("Failed to POST data");
     }
-
-    const result = await res.json();
-    return result;
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.log(error);
     return null;

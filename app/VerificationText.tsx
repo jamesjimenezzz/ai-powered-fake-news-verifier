@@ -12,25 +12,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ClaimData } from "@/lib/api";
-import { ResultData } from "@/lib/types";
+import { VerificationResult } from "@/lib/api";
+import { useResultStore } from "@/store/verification";
 
 const VerificationText = () => {
   const [query, setQuery] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [verdict, setVerdict] = useState("");
-  const [sources, setSources] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { setVerdict, setSources, setClaim, claim } = useResultStore();
 
   const handleSubmit = async () => {
-    setLoading(true);
     try {
-      const postData = await ClaimData(query);
-      setVerdict(postData.verdict);
-      setSources(postData.sources);
+      setIsLoading(true);
+      const response = await VerificationResult(claim);
+      setVerdict(response?.verdict || "");
+      setSources(response?.sources || []);
     } catch {
-      console.log("failed");
+      console.log("Failed to submit");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -45,28 +44,20 @@ const VerificationText = () => {
         </CardHeader>
         <CardContent>
           <textarea
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            value={claim}
+            onChange={(e) => setClaim(e.target.value)}
             className="w-full p-2.5 outline rounded-md h-50"
             placeholder="Paste or type the news article, claim, or text you want to verify..."
           ></textarea>
           <Button
             onClick={handleSubmit}
-            disabled={query.length < 1}
+            disabled={claim.length < 1 || isLoading}
             className="w-full py-5 cursor-pointer  my-4"
           >
             Analyze Text
           </Button>
         </CardContent>
       </Card>
-
-      {!loading ? (
-        <p>
-          RESULT: {verdict} {sources}
-        </p>
-      ) : (
-        <p>Loading...</p>
-      )}
     </>
   );
 };

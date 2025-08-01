@@ -47,7 +47,7 @@ def verify_source(text: str) -> dict:
     sources = [doc.metadata.get("source", "unknown") for doc in relevant_docs]
 
     messages = [
-        SystemMessage(content="You are a fact-checking assistant. Only answer based on the context provided. Identify if the claim is true or false, or unknown."),
+        SystemMessage(content="You are a fact-checking assistant. Only answer based on the context provided. Dont add(example: **Claim:**  except for tldr only or anything like that. when inserting a tldr, make a new line.) Make a concise description too about the claim, and make a TLDR too: insert the claim and the answer True, False, or, Unknown"),
         HumanMessage(content=f"Context:\n{context}\n\nQuestion: {text}")
     ]
 

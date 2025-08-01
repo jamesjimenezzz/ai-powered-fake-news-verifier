@@ -1,6 +1,4 @@
-
-
-export interface ResultData {
-    verdict: string;
-    sources: string[];
+export interface VerificationResponse {
+  verdict: string;
+  sources: string[];
 }

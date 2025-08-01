@@ -17,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useResultStore } from "@/store/verification";
 
 const VerificationFiles = () => {
   const [query, setQuery] = useState<string>("");
@@ -26,6 +27,7 @@ const VerificationFiles = () => {
 
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const pdfInputRef = useRef<HTMLInputElement | null>(null);
+  const { setVerdict, setSources } = useResultStore();
 
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
