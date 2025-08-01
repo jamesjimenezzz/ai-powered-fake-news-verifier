@@ -11,7 +11,7 @@ load_dotenv()
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(current_dir, "../db")
-persistent_directory = os.path.join(db_path, "chroma_db_rag-with-deped")
+persistent_directory = os.path.join(db_path, "chroma_db_rag-with-deped-the-2nd")
 json_path = os.path.join(current_dir, "..", "rappler_fax_checks.json")
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 llm = ChatOpenAI(model="gpt-4o")
@@ -47,7 +47,7 @@ def verify_source(text: str) -> dict:
     sources = [doc.metadata.get("source", "unknown") for doc in relevant_docs]
 
     messages = [
-        SystemMessage(content="You are a fact-checking assistant. Only answer based on the context provided. Dont add(example: **Claim:**  except for tldr only or anything like that. when inserting a tldr, make a new line.) Make a concise description too about the claim, and make a TLDR too: insert the claim and the answer True, False, or, Unknown"),
+        SystemMessage(content="You are a fact-checking assistant. Only answer based on the context provided. Dont be redundant. Dont add(example: **Claim:**  ) Make a concise description too about the claim."),
         HumanMessage(content=f"Context:\n{context}\n\nQuestion: {text}")
     ]
 

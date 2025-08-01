@@ -15,9 +15,10 @@ import { CircleX } from "lucide-react";
 import { BookOpenCheck } from "lucide-react";
 import Link from "next/link";
 import { CircleCheckBig } from "lucide-react";
+import Spinner from "@/components/Spinner";
 
 const VerdictSide = () => {
-  const { verdict, sources, claim } = useResultStore();
+  const { verdict, sources, claim, isLoading, fileName } = useResultStore();
   const isTrue = verdict.toLowerCase().includes("true");
   const isFalse = verdict.toLowerCase().includes("false");
   const isUnknown = verdict.toLowerCase().includes("unknown");
@@ -29,8 +30,15 @@ const VerdictSide = () => {
           Verification Result
         </CardTitle>
       </CardHeader>
-      <CardContent className="w-full flex flex-col gap-1.5 items-center h-full pb-10  justify-center">
-        {!verdict || !sources ? (
+      <CardContent className="w-full flex flex-col gap-1.5 items-center h-full pb-10 justify-center">
+        {isLoading ? (
+          <>
+            <Spinner />
+            <h1 className="text-lg font-medium text-muted-foreground">
+              Analyzing...
+            </h1>
+          </>
+        ) : !verdict || !sources ? (
           <>
             <div className="rounded-full p-5 bg-gray-100">
               <BookOpenCheck className="text-gray-500" size={40} />
@@ -60,14 +68,20 @@ const VerdictSide = () => {
                     </p>
                   </div>
                 )}
-                <p className="font-semibold ">{claim}</p>
+                <p className="font-semibold ">
+                  {claim} {fileName}
+                </p>
                 <p>{verdict}</p>
                 <div>
                   {sources.map((source) => (
-                    <div className="my-4 p-2 bg-gray-100 rounded-md">
+                    <div
+                      key={source}
+                      className="my-4 p-2 bg-gray-100 rounded-md"
+                    >
                       <Link
-                        className="underline font-semibold text-sm text-blue-600"
+                        className="underline font-semibold text-sm text-gray-800"
                         href={source}
+                        target="_blank"
                       >
                         {source}
                       </Link>

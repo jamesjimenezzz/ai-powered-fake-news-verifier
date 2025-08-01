@@ -147,17 +147,17 @@ const VerificationFiles = () => {
             <Button
               variant={"destructive"}
               onClick={handleRemove}
-              disabled={fileName.length == 0}
+              disabled={fileName.length == 0 || isLoading}
               className=" py-5 cursor-pointer flex-1  my-4"
             >
               Remove
             </Button>
             <Button
               onClick={handleSubmit}
-              disabled={fileName.length == 0}
+              disabled={fileName.length == 0 || isLoading}
               className=" py-5 cursor-pointer flex-1/2  my-4"
             >
-              Analyze Text
+              Analyze File
             </Button>
           </div>
         </CardContent>
